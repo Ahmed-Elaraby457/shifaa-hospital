@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>مستشفى الشفاء</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Cairo', sans-serif;
+    }
+
+    body {
+      background-color: #f5faff;
+      color: #333;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* ===== الهيدر ===== */
+    header {
+      background: linear-gradient(135deg, #0077b6, #00b4d8);
+      color: white;
+      text-align: center;
+      padding: 60px 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      animation: rotateGlow 10s linear infinite;
+    }
+
+    @keyframes rotateGlow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    header h1 {
+      font-size: 2.8rem;
+      margin-bottom: 10px;
+      animation: fadeDown 1s ease-out;
+    }
+
+    header p {
+      font-size: 1.3rem;
+      opacity: 0.9;
+      animation: fadeUp 1.3s ease-out;
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== النافبار ===== */
+
+nav {
+  display: flex;
+  justify-content: center;
+  background: white;
+  padding: 10px 0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  flex-wrap: wrap; /* يسمح بتعدد السطور في الشاشات الصغيرة */
+}
+nav a {
+  color: #0077b6;
+  margin: 6px 10px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+  font-size: 0.95rem;
+}
+nav a:hover {
+  color: #023e8a;
+}
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 3px;
+      bottom: -4px;
+      left: 0;
+      background: #00b4d8;
+      transition: 0.3s;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* ===== الهيرو ===== */
+    .hero {
+      background: linear-gradient(135deg, rgba(0,119,182,0.7), rgba(0,180,216,0.6)), url('https://images.unsplash.com/photo-1580281657521-944ff3c3e2f8?auto=format&fit=crop&w=1000&q=80') center/cover no-repeat;
+      color: white;
+      text-align: center;
+      padding: 100px 20px;
+      position: relative;
+      animation: slideIn 1.5s ease-out;
+    }
+
+    .hero h2 {
+      font-size: 2.3rem;
+      margin-bottom: 15px;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: auto;
+      opacity: 0.9;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== قسم الخدمات ===== */
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      padding: 60px 20px;
+      text-align: center;
+      background: #f9fdff;
+      animation: fadeIn 2s ease;
+    }
+
+    .service {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      padding: 25px;
+      transition: 0.3s ease;
+    }
+
+    .service:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .service h3 {
+      color: #0077b6;
+      margin-bottom: 10px;
+    }
+
+    /* ===== الفوتر ===== */
+    footer {
+      background: linear-gradient(135deg, #023e8a, #0077b6);
+      color: white;
+      text-align: center;
+      padding: 25px;
+      font-size: 1rem;
+      animation: fadeUp 1.5s ease-out;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>مستشفى الشفاء</h1>
+    <p>طبيبك في جيبك</p>
+  </header>
+
+  <nav>
+    <a href="index.html">الرئيسية</a>
+    <a href="about.html">عن المستشفى</a>
+    <a href="services.html">الخدمات الطبية</a>
+    <a href="appointment.html">احجز موعدك</a>
+    <a href="doctors.html">الاقسام</a>
+    <a href="contact.html">تواصل معنا</a>
+  </nav>
+
+  <section class="hero" id="home">
+    <h2>رعاية طبية متكاملة على مدار الساعة</h2>
+    <p>نقدّم لك أحدث التقنيات الطبية وخدمات الطوارئ عبر تطبيقنا الإلكتروني في أي وقت وأي مكان.</p>
+  </section>
+
+  <section class="services" id="services">
+    <div class="service">
+      <h3>حجز كشف</h3>
+      <p>احجز كشفك مع أفضل الأطباء بسهولة وبدون انتظار.</p>
+    </div>
+    <div class="service">
+      <h3>استشارات فورية</h3>
+      <p>تحدث مع الطبيب مباشرة عبر الفيديو أو الدردشة النصية.</p>
+    </div>
+    <div class="service">
+      <h3>نتائج التحاليل</h3>
+      <p>اطّلع على نتائج التحاليل الخاصة بك أونلاين بسرعة وأمان.</p>
+    </div>
+    <div class="service">
+      <h3>خدمة الطوارئ</h3>
+      <p>فريقنا الطبي جاهز لخدمتك في أي لحظة على مدار اليوم.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 مستشفى الشفاء. جميع الحقوق محفوظة.</p>
+  </footer>
+</body>
+</html>
+
+

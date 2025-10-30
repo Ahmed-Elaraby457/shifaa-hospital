@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>احجز موعدك</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
+    :root {
+      --blue1: #0077b6;
+      --blue2: #0096c7;
+      --bg: #f0fbff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: var(--bg);
+      margin: 0;
+      padding: 0;
+      color: #023047;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+    header {
+      background: linear-gradient(135deg, var(--blue1), var(--blue2));
+      color: white;
+      text-align: center;
+      padding: 25px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      width: 100%;
+    }
+    header h1 { margin: 0; font-size: 2rem; }
+    nav {
+      display: flex;
+      justify-content: center;
+      background: white;
+      padding: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      width: 100%;
+      flex-wrap: wrap;
+    }
+    nav a {
+      color: var(--blue1);
+      margin: 5px 10px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    nav a:hover { color: #023e8a; }
+    main {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      margin: 40px 20px;
+      max-width: 700px;
+      width: 100%;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: var(--blue1);
+      margin-bottom: 20px;
+    }
+    form {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 15px;
+    }
+    label { font-weight: 600; color: #023047; }
+    input, select {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-family: 'Cairo', sans-serif;
+    }
+    button {
+      background: var(--blue1);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 1rem;
+      font-weight: bold;
+    }
+    button:hover { background: var(--blue2); }
+    #message {
+      text-align: center;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    footer {
+      margin-top: auto;
+      background: var(--blue1);
+      color: white;
+      width: 100%;
+      text-align: center;
+      padding: 15px;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>احجز موعدك</h1>
+</header>
+
+<nav>
+  <a href="index.html">الرئيسية</a>
+  <a href="about.html">عن المستشفى</a>
+  <a href="services.html">الخدمات</a>
+  <a href="appointment.html">احجز موعدك</a>
+  <a href="doctors.html">الاقسام </a>
+  <a href="contact.html">تواصل معنا</a>
+</nav>
+
+<main>
+  <h2> احجز موعدك</h2>
+  <form id="bookingForm">
+    <label>الاسم:</label>
+    <input type="text" id="name" required>
+
+    <label>القسم:</label>
+    <select id="department" required>
+      <option value="">اختر القسم</option>
+    </select>
+
+    <label>الدكتور:</label>
+    <select id="doctor" required>
+      <option value="">اختر الدكتور</option>
+    </select>
+
+    <label>تاريخ الموعد:</label>
+    <input type="date" id="date" required>
+
+    <label>الوقت:</label>
+    <input type="time" id="time" required>
+
+    <button type="submit">احجز الآن</button>
+  </form>
+
+  <div id="message"></div>
+</main>
+
+<footer>
+  © 2025 مستشفى الشفاء - جميع الحقوق محفوظة
+</footer>
+
+<script>
+const data = [
+  {name:"الباطنة", doctors:[
+    {id:"d1", name:"د. أسامة ربيع", days:["الأحد","الثلاثاء"], from:10, to:14},
+    {id:"d2", name:"د. إيهاب الحنفي", days:["الاثنين","الخميس"], from:13, to:17}
+  ]},
+  {name:"العظام", doctors:[
+    {id:"d3", name:"د. شادي السعدني", days:["الأربعاء","الجمعة"], from:9, to:13},
+    {id:"d4", name:"د. محمد نجيب", days:["السبت"], from:11, to:15}
+  ]},
+  {name:"الجلدية", doctors:[
+    {id:"d5", name:"د. هدير حازم", days:["السبت","الثلاثاء"], from:10, to:16},
+    {id:"d6", name:"د. آية عبد الحميد", days:["الاثنين","الأربعاء"], from:14, to:18}
+  ]},
+  {name:"الأعصاب", doctors:[
+    {id:"d7", name:"د. أحمد الوزير", days:["الجمعة"], from:10, to:14},
+    {id:"d8", name:"د. أيمن جلهوم", days:["الثلاثاء","الخميس"], from:13, to:17}
+  ]}
+];
+
+const departmentSelect = document.getElementById("department");
+const doctorSelect = document.getElementById("doctor");
+const message = document.getElementById("message");
+
+// تحميل الأقسام
+data.forEach(dep=>{
+  const option = document.createElement("option");
+  option.value = dep.name;
+  option.textContent = dep.name;
+  departmentSelect.appendChild(option);
+});
+
+// عند اختيار قسم
+departmentSelect.addEventListener("change", ()=>{
+  doctorSelect.innerHTML = "<option value=''>اختر الدكتور</option>";
+  const dep = data.find(d=>d.name === departmentSelect.value);
+  if(dep){
+    dep.doctors.forEach(doc=>{
+      const opt = document.createElement("option");
+      opt.value = doc.id;
+      opt.textContent = doc.name;
+      doctorSelect.appendChild(opt);
+    });
+  }
+});
+
+// التحقق من الموعد
+document.getElementById("bookingForm").addEventListener("submit", (e)=>{
+  e.preventDefault();
+  const dep = data.find(d=>d.name === departmentSelect.value);
+  const doc = dep.doctors.find(d=>d.id === doctorSelect.value);
+  const date = new Date(document.getElementById("date").value);
+  const time = document.getElementById("time").value;
+  const hours = parseInt(time.split(":")[0]);
+
+  const daysMap = ["الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"];
+  const dayName = daysMap[date.getDay()];
+
+  if(!doc.days.includes(dayName)){
+    message.style.color = "red";
+    message.textContent = `❌ الدكتور لا يعمل يوم ${dayName}`;
+    return;
+  }
+  if(hours < doc.from || hours >= doc.to){
+    message.style.color = "red";
+    message.textContent = `⚠️ مواعيد الدكتور من ${doc.from}:00 إلى ${doc.to}:00 فقط`;
+    return;
+  }
+  message.style.color = "green";
+  message.textContent = `✅ تم حجز الموعد بنجاح مع ${doc.name} في قسم ${dep.name}`;
+});
+</script>
+
+</body>
+</html>

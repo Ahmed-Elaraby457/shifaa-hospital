@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>عن مستشفى الشفاء</title>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
+
+  :root {
+    --blue1: #0077b6;
+    --blue2: #00b4d8;
+    --blue3: #48cae4;
+    --bg: #f0fbff;
+    --text: #023047;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: 'Cairo', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+    text-align: center; /* ✅ عشان يظبط العناصر في النص */
+  }
+
+  header {
+    background: linear-gradient(135deg, var(--blue1), var(--blue2));
+    color: white;
+    text-align: center;
+    padding: 60px 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    animation: fadeInDown 1s ease;
+  }
+
+  header h1 {
+    font-size: 2.8rem;
+    margin: 0;
+  }
+
+  header p {
+    font-size: 1.3rem;
+    opacity: 0.9;
+    margin-top: 10px;
+  }
+
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  flex-wrap: wrap; /* ✅ ده اللي بيخلي اللينكات تنزل واحدة واحدة */
+  gap: 10px 20px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  padding: 10px 15px;
+}
+
+nav a {
+  color: var(--blue1);
+  padding: 10px 18px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+  border-radius: 8px;
+  white-space: nowrap; /* ✅ عشان النص ما يكسرش */
+}
+
+nav a:hover {
+  color: var(--blue2);
+  background: rgba(0,183,255,0.08);
+  transform: translateY(-3px);
+}
+
+  main {
+    max-width: 900px;
+    background: white;
+    margin: 40px auto;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    line-height: 1.9;
+    animation: fadeInUp 1.2s ease;
+    text-align: right;
+  }
+
+  main h2 {
+    color: var(--blue1);
+    border-right: 6px solid var(--blue2);
+    padding-right: 10px;
+    margin-top: 30px;
+    font-size: 1.5rem;
+  }
+
+  main p {
+    font-size: 1.05rem;
+    margin-top: 10px;
+  }
+
+  .services {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+    margin-top: 35px;
+    text-align: center;
+  }
+
+  .service-card {
+    background: linear-gradient(180deg, #ffffff, #e8faff);
+    border-radius: 18px;
+    padding: 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    transition: all 0.4s ease;
+    animation: floatUp 1.2s ease forwards;
+    opacity: 0;
+  }
+
+  .service-card i {
+    font-size: 2.6rem;
+    color: var(--blue2);
+    margin-bottom: 10px;
+  }
+
+  .service-card h3 {
+    color: var(--blue1);
+    margin: 10px 0 5px;
+  }
+
+  .service-card:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 10px 25px rgba(0,150,199,0.25);
+  }
+
+  footer {
+    background: var(--blue1);
+    color: white;
+    text-align: center;
+    padding: 15px;
+    font-size: 0.9rem;
+    margin-top: 40px;
+  }
+
+  @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+  @keyframes fadeInUp { from {transform: translateY(30px); opacity: 0;} to {transform: translateY(0); opacity: 1;} }
+  @keyframes fadeInDown { from {transform: translateY(-30px); opacity: 0;} to {transform: translateY(0); opacity: 1;} }
+  @keyframes floatUp { from {transform: translateY(30px); opacity: 0;} to {transform: translateY(0); opacity: 1;} }
+
+  @media (max-width: 600px) {
+    header h1 { font-size: 2rem; }
+    main { padding: 25px; margin: 20px; }
+  nav {
+    gap: 8px;
+    padding: 8px 10px;
+  }
+
+  nav a {
+    font-size: 0.9rem;
+    padding: 8px 14px;
+  }
+}
+</style>
+
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <header>
+    <h1>مستشفى الشفاء</h1>
+    <p>طبيبك في جيبك</p>
+  </header>
+
+  <nav>
+    <a href="index.html">الرئيسية</a>
+    <a href="about.html">عن المستشفى</a>
+    <a href="services.html">الخدمات</a>
+    <a href="appointment.html">احجز موعدك</a>
+    <a href="doctors.html">الاقسام</a>
+    <a href="contact.html">تواصل معنا</a>
+  </nav>
+
+  <main>
+    <h2>EMAIL</h2>
+    <p>
+      <P><span>shifaahospital123@gmai.com</span></P>
+     
+    </p>
+
+    <h2>phone number</h2>
+    <p>
+      <P><span>01066679042</span></P>
+
+    </p>
+
+
+  </main>
+
+  <footer>
+    <p>© 2025 مستشفى الشفاء | جميع الحقوق محفوظة</p>
+  </footer>
+
+  <script>
+    // تفعيل أنيميشن الظهور التدريجي للخدمات
+    const cards = document.querySelectorAll('.service-card');
+    cards.forEach((card, index) => {
+      setTimeout(() => {
+        card.style.opacity = '1';
+      }, index * 200);
+    });
+  </script>
+</body>
+</html>

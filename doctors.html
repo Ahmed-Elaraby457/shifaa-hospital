@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>مستشفى الشفاء - طبيبك في جيبك</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue1:#0077b6;
+  --blue2:#00b4d8;
+  --bg:#f5faff;
+  --card:#ffffff;
+  --muted:#6b7280;
+  --danger:#ef4444;
+}
+*{box-sizing:border-box;}
+body {
+  margin:0;
+  font-family:'Cairo',sans-serif;
+  background:var(--bg);
+  color:#0f172a;
+}
+header {
+  background: linear-gradient(135deg, #0077b6, #00b4d8);
+  color: white;
+  text-align: center;
+  padding: 40px 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+header p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+nav {
+  display: flex;
+  justify-content: center;
+  background: white;
+  padding: 10px 0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  flex-wrap: wrap; /* يسمح بتعدد السطور في الشاشات الصغيرة */
+}
+nav a {
+  color: #0077b6;
+  margin: 6px 10px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+  font-size: 0.95rem;
+}
+nav a:hover {
+  color: #023e8a;
+}
+
+.container {max-width:1100px;margin:30px auto;padding:0 16px;}
+.sections {display:grid;gap:24px;}
+.dept-card {
+  background:var(--card);
+  border-radius:14px;
+  box-shadow:0 6px 20px rgba(2,6,23,0.06);
+  padding:20px;
+}
+.dept-header {display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;}
+.doctors-grid {
+  margin-top:14px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:12px;
+}
+.doc {
+  display:flex;align-items:center;gap:10px;
+  background:linear-gradient(180deg,#ffffff,#f8fdff);
+  padding:10px;border-radius:12px;cursor:pointer;
+  transition:transform .18s ease, box-shadow .18s;
+  border:1px solid rgba(2,6,23,0.04);
+}
+.doc:hover {transform:translateY(-6px);box-shadow:0 12px 30px rgba(2,6,23,0.08);}
+.doc img {width:56px;height:56px;border-radius:12px;object-fit:cover;}
+.doc .meta .name {font-weight:700;}
+.doc .meta .spec {font-size:0.9rem;color:var(--muted);margin-top:4px;}
+.overlay {
+  position:fixed;inset:0;background:rgba(0,0,0,0.5);display:none;
+  align-items:center;justify-content:center;z-index:100;
+  padding:10px;
+}
+.overlay.show {display:flex;}
+.modal {
+  background:#fff;border-radius:12px;padding:20px;
+  display:grid;grid-template-columns:1fr 1fr;gap:20px;
+  width:min(900px,96%);
+  animation:pop .2s ease;
+  max-height:90vh;
+  overflow-y:auto;
+}
+@keyframes pop {from{transform:scale(.95);opacity:0;}to{transform:scale(1);opacity:1;}}
+.left {
+  text-align:center;background:#f9fdff;border-radius:10px;padding:12px;
+}
+.left img {width:150px;height:150px;border-radius:10px;object-fit:cover;margin-bottom:10px;}
+.left h3 {margin:0;}
+.left p {font-size:0.95rem;color:#374151;line-height:1.45;margin-top:10px;}
+.right {display:flex;flex-direction:column;gap:10px;}
+.stars button {background:none;border:0;font-size:26px;cursor:pointer;color: gold;}
+.comment {
+  background:white;padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.05);
+  margin-top:6px;
+}
+.comment .who {font-weight:700;}
+.comment .text {margin-top:4px;}
+.comment .stars {color:gold;font-size:18px;margin-top:4px;}
+.comment .del {background:transparent;border:0;color:var(--danger);cursor:pointer;font-weight:bold;}
+.confirm {
+  position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
+  background:#fff;padding:14px;border-radius:10px;box-shadow:0 0 20px rgba(0,0,0,0.2);
+  display:none;z-index:200;width:90%;max-width:300px;text-align:center;
+}
+.confirm.show {display:block;}
+.confirm button {margin:4px 8px;padding:6px 12px;border:0;border-radius:6px;cursor:pointer;}
+.confirm .ok {background:var(--danger);color:#fff;}
+.confirm .cancel {background:#eee;}
+
+/* 🎯 تحسينات التجاوب للشاشات الصغيرة */
+@media (max-width:850px){
+  .modal {grid-template-columns:1fr;}
+  .left img {width:120px;height:120px;}
+  header h1 {font-size:2rem;}
+  header p {font-size:1rem;}
+}
+@media (max-width:480px){
+  nav a {font-size:0.8rem;margin:4px 6px;}
+  .dept-card {padding:14px;}
+  .doc {padding:8px;}
+  .left p {font-size:0.85rem;}
+  .stars button {font-size:22px;}
+}
+</style>
+</head>
+<body>
+
+  <header>
+    <h1>مستشفى الشفاء</h1>
+    <p>طبيبك في جيبك</p>
+  </header>
+
+  <nav>
+    <a href="index.html">الرئيسية</a>
+    <a href="about.html">عن المستشفى</a>
+    <a href="services.html">الخدمات الطبية</a>
+    <a href="appointment.html">احجز موعدك</a>
+    <a href="doctors.html">الأقسام</a>
+    <a href="contact.html">تواصل معنا</a>
+  </nav>
+
+<main class="container">
+  <div id="sections" class="sections"></div>
+</main>
+
+<div id="overlay" class="overlay">
+  <div class="modal">
+    <div class="left">
+      <img id="docImg">
+      <h3 id="docName"></h3>
+      <div id="docSpec" style="color:#6b7280;"></div>
+      <p id="docDesc"></p>
+    </div>
+    <div class="right">
+      <div style="font-weight:700;">قيّم الطبيب واكتب تعليقك</div>
+      <div id="starPicker" class="stars"></div>
+      <input id="author" placeholder="اسمك (اختياري)" style="padding:8px;border-radius:8px;border:1px solid #ccc;">
+      <textarea id="comment" placeholder="اكتب تعليقك هنا..." style="padding:8px;border-radius:8px;border:1px solid #ccc;min-height:70px;"></textarea>
+      <button id="send" style="padding:10px;border:0;border-radius:8px;background:var(--blue1);color:#fff;cursor:pointer;font-weight:700;">أضف</button>
+      <div id="commentsList"></div>
+    </div>
+  </div>
+</div>
+
+<div id="confirm" class="confirm">
+  <p>هل أنت متأكد من حذف هذا التعليق؟</p>
+  <button class="cancel">إلغاء</button>
+  <button class="ok">تأكيد الحذف</button>
+</div>
+
+<script>
+const data = [
+  {name:"الباطنة", doctors:[
+    {id:"d1",name:"د. اسامة ربيع أبوالحسن",spec:"الاحد والثلاثاء من 10 صباحاً حتى 2 ظهراً.",img:"WhatsApp Image 2025-10-29 at 19.40.13_001856a1.jpg",desc:"أخصائي امراض البطنه والمناعه وامراض المفاصل والروماتيزم وامراض الكلى والسكر بمستشفيات دار فؤاد"},
+    {id:"d2",name:"د. ايهاب علي الحنفي",spec:"الاثنين والخميس من 1 ظهراً حتى 5 مساءً.",img:"WhatsApp Image 2025-10-29 at 19.40.13_a8f1e21f.jpg",desc:"استاذ بمركز جراحة الجهاز الهضمي وزراعة الكبد كلية - الطب جامعة المنصوره عضوا الجمعيه الدوليه لجراحي الجهاز الهضمي والاورام"}
+  ]},
+  {name:"العظام", doctors:[
+    {id:"d3",name:"د. شادي السعدني",spec:"الاربعاء والجمعة من 9 صباحاً حتى 1 ظهراً.",img:"WhatsApp Image.jpg",desc:"  استشاري اول جراحة العظام والمفاصل والعمود الفقري"},
+    {id:"d4",name:"د. محمد نجيب",spec:"السبت من 11 صباحاً حتى 3 مساءً.",img:"WhatsApp Image 2025-.jpg",desc:"أخصائي العظام ومناظير الركبه والطب الرياضي بمستشفى التضامن"}
+  ]},
+  {name:"الجلدية", doctors:[
+    {id:"d5",name:"د. هدير حازم",spec:"السبت والثلاثاء من 10 صباحاً حتى 4 مساءً.",img:"WhatsApp Image 2025-10-29 at 00.22.34_ab4d5819.jpg",desc:"مدرس مساعد الأمراض الجلدية والتجميل كلية الطب جامعة قناة السويس. ماجستير الامراض الجلديه"},
+    {id:"d6",name:"د. آية عبد الحميد",spec:"الاثنين والأربعاء من 2 ظهراً حتى 6 مساءً.",img:"WhatsApp Image 2025-10-29 at 00.22.34_d6cafcd5.jpg",desc:"اخصائي الأمراض الجلديه والتجميل واليزر وعلاج وزراعت الشعر ماجستير الامراض الجلدية و التناسلية"}
+  ]},
+  {name:"الأعصاب", doctors:[
+    {id:"d7",name:"د. احمد الوزير ",spec:".الجمعة من 10 صباحاً حتى 2 ظهراً",img:"WhatsApp Image 2025-10-29 at 00.23.47_3b0bb333.jpg",desc:" أخصائي امراض المخ والأعصاب بمستشفى دار الفؤاد.ماجستير امراض المخ والاعصاب."},
+    {id:"d8",name:"د. ايمن جلهوم",spec:"الثلاثاء والخميس من 1 ظهراً حتى 5 مساءً." ,img:"WhatsApp Image 2025-10-29 at 00.23.47_82b02d23.jpg",desc:"أ.د رئيس قسم جراحة المخ و الاعصاب بمستشفى السلام"}
+  ]}
+];
+
+const sections = document.getElementById("sections");
+const overlay = document.getElementById("overlay");
+const docImg = document.getElementById("docImg");
+const docName = document.getElementById("docName");
+const docSpec = document.getElementById("docSpec");
+const docDesc = document.getElementById("docDesc");
+const docDesk = document.getElementById("docDesk");
+const starPicker = document.getElementById("starPicker");
+const commentsList = document.getElementById("commentsList");
+const author = document.getElementById("author");
+const comment = document.getElementById("comment");
+const send = document.getElementById("send");
+const confirmBox = document.getElementById("confirm");
+const cancelBtn = confirmBox.querySelector(".cancel");
+const okBtn = confirmBox.querySelector(".ok");
+
+let currentDoctorId = null;
+let currentRating = 5;
+let pendingDelete = null;
+
+function renderSections(){
+  data.forEach(dept=>{
+    const div=document.createElement("div");
+    div.className="dept-card";
+    div.innerHTML=`<div class='dept-header'><h2>${dept.name}</h2><div>${dept.doctors.length} دكتور</div></div>
+    <div class='doctors-grid'></div>`;
+    const grid=div.querySelector(".doctors-grid");
+    dept.doctors.forEach(d=>{
+      const card=document.createElement("div");
+      card.className="doc";
+      card.innerHTML=`<img src="${d.img}"><div class='meta'><div class='name'>${d.name}</div><div class='spec'>${d.spec}</div></div>`;
+      card.onclick=()=>openDoctor(d);
+      grid.appendChild(card);
+    });
+    sections.appendChild(div);
+  });
+}
+
+function openDoctor(doc){
+  currentDoctorId=doc.id;
+  docImg.src=doc.img;
+  docName.textContent=doc.name;
+  docSpec.textContent=doc.spec;
+  docDesc.textContent=doc.desc;
+  currentRating=5;
+  renderStars();
+  overlay.classList.add("show");
+  renderComments();
+}
+overlay.onclick=e=>{if(e.target===overlay)overlay.classList.remove("show");}
+
+function renderStars(){
+  starPicker.innerHTML="";
+  for(let i=1;i<=5;i++){
+    const b=document.createElement("button");
+    b.textContent=i<=currentRating?"★":"☆";
+    b.onclick=()=>{currentRating=i;renderStars();}
+    starPicker.appendChild(b);
+  }
+}
+
+send.onclick=()=>{
+  const txt=comment.value.trim();
+  if(!txt)return alert("اكتب تعليق");
+  const arr=load(currentDoctorId);
+  const c={id:Date.now(),author:author.value||"مستخدم",text:txt,rating:currentRating,time:new Date().toLocaleString()};
+  arr.unshift(c);
+  save(currentDoctorId,arr);
+  comment.value="";author.value="";currentRating=5;renderStars();
+  renderComments();
+};
+
+function renderComments(){
+  const arr=load(currentDoctorId);
+  commentsList.innerHTML="";
+  if(arr.length===0)return commentsList.innerHTML="<div style='color:#777;'>لا توجد تعليقات بعد.</div>";
+  arr.forEach(c=>{
+    const div=document.createElement("div");
+    div.className="comment";
+    div.innerHTML=`<div class='who'>${c.author}</div><div class='text'>${c.text}</div>
+    <div class='stars'>${"★".repeat(c.rating)}${"☆".repeat(5-c.rating)}</div>
+    <div style='font-size:0.8rem;color:#555;'>${c.time}</div>
+    <button class='del'>حذف</button>`;
+    div.querySelector(".del").onclick=()=>{
+      pendingDelete={id:c.id};
+      confirmBox.classList.add("show");
+    };
+    commentsList.appendChild(div);
+  });
+}
+
+cancelBtn.onclick=()=>{pendingDelete=null;confirmBox.classList.remove("show");}
+okBtn.onclick=()=>{
+  if(!pendingDelete)return;
+  const arr=load(currentDoctorId).filter(x=>x.id!==pendingDelete.id);
+  save(currentDoctorId,arr);
+  confirmBox.classList.remove("show");
+  renderComments();
+};
+
+function load(id){return JSON.parse(localStorage.getItem("comments_"+id)||"[]");}
+function save(id,arr){localStorage.setItem("comments_"+id,JSON.stringify(arr));}
+
+renderSections();
+renderStars();
+</script>
+</body>
+</html>

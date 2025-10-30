@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الاستشارات الطبية</title>
+<style>
+  body {
+    font-family: "Cairo", sans-serif;
+    background: linear-gradient(to left, #e3f2fd, #ffffff);
+    margin: 0;
+    padding: 0;
+  }
+
+nav {
+  display: flex;
+  justify-content: center;
+  background: white;
+  padding: 10px 0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  flex-wrap: wrap; /* يسمح بتعدد السطور في الشاشات الصغيرة */
+}
+header {
+  background: linear-gradient(135deg, #0077b6, #00b4d8);
+  color: white;
+  text-align: center;
+  padding: 40px 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+nav a {
+  color: #0077b6;
+  margin: 6px 10px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+  font-size: 0.95rem;
+}
+nav a:hover {
+  color: #023e8a;
+}
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 3px;
+      bottom: -4px;
+      left: 0;
+      background: #00b4d8;
+      transition: 0.3s;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+  .container {
+    max-width: 650px;
+    background: white;
+    margin: 40px auto;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+
+  label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+  }
+
+  input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+  }
+
+  textarea {
+    resize: none;
+    height: 120px;
+  }
+
+  button {
+    background-color: #0077b6;
+    color: white;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    margin-top: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background-color: #005f87;
+    transform: scale(1.02);
+  }
+
+  .message {
+    margin-top: 15px;
+    text-align: center;
+    font-weight: bold;
+    color: green;
+  }
+
+  .file-preview {
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  .file-preview img {
+    max-width: 100%;
+    max-height: 200px;
+    border-radius: 10px;
+    margin-top: 10px;
+  }
+
+  @media (max-width: 600px) {
+    header {
+      font-size: 1.2rem;
+      padding: 12px;
+    }
+    .container {
+      margin: 20px;
+      padding: 15px;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <header>
+    <h1>مستشفى الشفاء</h1>
+    <p>طبيبك في جيبك</p>
+  </header>
+
+  <nav>
+    <a href="index.html">الرئيسية</a>
+    <a href="about.html">عن المستشفى</a>
+    <a href="services.html">الخدمات</a>
+    <a href="appointment.html">احجز موعدك</a>
+    <a href="doctors.html">الاقسام</a>
+    <a href="contact.html">تواصل معنا</a>
+  </nav>
+
+<div class="container">
+  <form id="consultForm">
+    <label>الاسم الكامل:</label>
+    <input type="text" id="name" placeholder="اكتب اسمك هنا" required>
+
+    <label>العمر:</label>
+    <input type="number" id="age" placeholder="ادخل عمرك" required>
+
+    <label>القسم الطبي:</label>
+    <select id="department" required>
+      <option value="">-- اختر القسم --</option>
+      <option value="الباطنة">الباطنة</option>
+      <option value="العظام">العظام</option>
+      <option value="الجلدية">الجلدية</option>
+      <option value="الأعصاب">الأعصاب</option>
+    </select>
+
+    <label>استشارتك الطبية:</label>
+    <textarea id="question" placeholder="اكتب سؤالك هنا..." required></textarea>
+
+    <label>ارفق صورة أو تقرير طبي (اختياري):</label>
+    <input type="file" id="fileInput" accept="image/*">
+    <div class="file-preview" id="filePreview"></div>
+
+    <button type="submit">📨 إرسال الاستشارة</button>
+    <div class="message" id="msg"></div>
+  </form>
+</div>
+
+<script>
+  const form = document.getElementById("consultForm");
+  const fileInput = document.getElementById("fileInput");
+  const filePreview = document.getElementById("filePreview");
+  const msg = document.getElementById("msg");
+
+  // عرض معاينة الصورة
+  fileInput.addEventListener("change", function() {
+    filePreview.innerHTML = "";
+    const file = this.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = document.createElement("img");
+        img.src = e.target.result;
+        filePreview.appendChild(img);
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  // معالجة الإرسال
+  form.addEventListener("submit", function(e) {
+    e.preventDefault();
+    const name = document.getElementById("name").value.trim();
+    const age = document.getElementById("age").value.trim();
+    const dep = document.getElementById("department").value;
+    const question = document.getElementById("question").value.trim();
+
+    if (name && age && dep && question) {
+      msg.style.color = "green";
+      msg.innerText = "✅ تم إرسال الاستشارة بنجاح! سيتم الرد خلال 24 ساعة.";
+      form.reset();
+      filePreview.innerHTML = "";
+    } else {
+      msg.style.color = "red";
+      msg.innerText = "⚠️ من فضلك أكمل جميع البيانات المطلوبة.";
+    }
+  });
+</script>
+
+</body>
+</html>
